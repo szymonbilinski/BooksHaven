@@ -11,7 +11,7 @@ namespace BooksHaven.ViewModels
 {
     public partial class SearchBookPageViewModel :BaseViewModel
     {
-        private readonly GoogleBooksService _googleBooksSerice=new GoogleBooksService();
+        private GoogleBooksService _googleBooksSerice=new GoogleBooksService();
         private string _searchQuery;
         public string SearchQuery
         {
