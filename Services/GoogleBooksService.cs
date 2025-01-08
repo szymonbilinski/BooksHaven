@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BooksHaven.Services;
 
-public class GoogleBooksService
+public partial class GoogleBooksService
 {
     private readonly HttpClient _httpClient;
 

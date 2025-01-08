@@ -1,13 +1,17 @@
 ﻿using System.Collections.ObjectModel;
 using System.Net.Http.Json;
 using BooksHaven.Models;
+using BooksHaven.Services;
 using BooksHaven.Views;
 using CommunityToolkit.Mvvm.Input;
+
+
 
 namespace BooksHaven.ViewModels
 {
     public partial class SearchBookPageViewModel :BaseViewModel
     {
+        private readonly GoogleBooksService _googleBooksSerice=new GoogleBooksService();
         private string _searchQuery;
         public string SearchQuery
         {
@@ -21,10 +25,11 @@ namespace BooksHaven.ViewModels
 
         public SearchBookPageViewModel()
         {
-            SearchCommand = new Command(async () => await SearchBooksAsync());
+            
+            SearchCommand = new Command(async () => await GetBooksFromAPI());
         }
 
-        private async Task SearchBooksAsync()
+        private async Task GetBooksFromAPI()
         {
             if (string.IsNullOrWhiteSpace(SearchQuery)) return;
 
@@ -32,32 +37,25 @@ namespace BooksHaven.ViewModels
 
             try
             {
-                using var client = new HttpClient();
-                var response = await client.GetFromJsonAsync<BookFromApiModel>(
-                    $"https://www.googleapis.com/books/v1/volumes?q={SearchQuery}");
-
-                if (response?.Items != null)
+                var response = await _googleBooksSerice.SearchBooksAsync(SearchQuery);
+                if (response.Count() > 0)
                 {
-                    foreach (var item in response.Items)
+                    foreach (var book in response)
                     {
-                        Books.Add(new BookModel
-                        {
-                            Title = item.VolumeInfo.Title ?? "No Title Available",
-                            Description = item.VolumeInfo.Description ?? "No Description Available",
-                            PublishedDate = item.VolumeInfo.PublishedDate ?? "No Published Date Available",
-                            Authors = item.VolumeInfo.Authors != null
-                                ? string.Join(", ", item.VolumeInfo.Authors)
-                                : "Unknown Author",
-                            Thumbnail = item.VolumeInfo.ImageLinks?.Thumbnail ?? "placeholder_image.png"
-                        });
+                        Books.Add(book);
                     }
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("No results","No books found with this query", "OK");
+
                 }
             }
             catch (Exception ex)
             {
-                // Handle errors gracefully
                 await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
             }
+           
         }
         [RelayCommand]
         async Task GoToDetailsAsync(BookModel book)

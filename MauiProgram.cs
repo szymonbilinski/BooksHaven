@@ -1,4 +1,5 @@
-﻿using BooksHaven.ViewModels;
+﻿using BooksHaven.Services;
+using BooksHaven.ViewModels;
 using BooksHaven.Views;
 using Microsoft.Extensions.Logging;
 
@@ -16,6 +17,8 @@ namespace BooksHaven
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            builder.Services.AddSingleton<GoogleBooksService>();
 
             builder.Services.AddTransient<BookDetailsPageViewModel>();
             builder.Services.AddTransient<BookDetailsPage>();

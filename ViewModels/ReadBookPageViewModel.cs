@@ -3,12 +3,7 @@ using BooksHaven.Services;
 using BooksHaven.Views;
 using CommunityToolkit.Mvvm.Input;
 using MvvmHelpers;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BooksHaven.ViewModels;
 
@@ -27,7 +22,6 @@ public partial class ReadBookPageViewModel : BaseViewModel
 
     async Task GetLocalBooks()
     {
-        await Task.Delay(2000);
         LocalBooks.Clear();
         var localbookstemp = await BookStorageService.GetBooks();
         LocalBooks.AddRange(localbookstemp);
