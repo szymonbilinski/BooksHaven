@@ -1,0 +1,59 @@
+# Build Folders
+bin/
+obj/
+Debug/
+Release/
+
+# User-Specific Files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.csproj.user
+
+# Visual Studio Code
+.vscode/
+
+# IDE Folders
+.idea/
+.vs/
+
+# macOS
+.DS_Store
+
+# Backup Files
+*.bak
+*.swp
+
+# Log Files
+*.log
+
+# Temporary Files
+~*
+Thumbs.db
+
+# API Keys or Secrets
+Secrets.json
+appsettings.json
+
+# Android/Gradle
+.gradle/
+*.apk
+.cxx/
+local.properties
+
+# iOS
+DerivedData/
+xcuserdata/
+*.ipa
+*.xcworkspace
+
+# NuGet
+*.nupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+
+# Other
+*.db
+*.db-journal
