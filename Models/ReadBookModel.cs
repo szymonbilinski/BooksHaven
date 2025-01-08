@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SQLite;
+﻿using SQLite;
 
-namespace BooksHaven.Models;
-
-public class ReadBookModel
+namespace BooksHaven.Models
 {
-    [PrimaryKey,AutoIncrement]
-    public int Id { get; set; }
-    public string ReadDate { get; set; }
-    public string Title { get; set; }
-    public string Authors { get; set; }
-    public string Description { get; set; }
-    public string PublishedDate { get; set; }
-    public string Thumbnail { get; set; }
+    public class ReadBookModel
+    {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+
+        public string ReadDate { get; set; } 
+        public string Title { get; set; }
+        public string? Authors { get; set; }
+        public string? Description { get; set; }
+        public string? PublishedDate { get; set; }
+        public string? Thumbnail { get; set; }
+    }
 }

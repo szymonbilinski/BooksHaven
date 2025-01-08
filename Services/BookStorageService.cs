@@ -1,60 +1,84 @@
 ﻿using BooksHaven.Models;
 using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BooksHaven.Services
 {
-    public static class BookStorageService 
+    public static class BookStorageService
     {
-        static SQLiteAsyncConnection db;
-        public static async Task Init()
+        private static SQLiteAsyncConnection? _db;
+
+        public static async Task InitializeAsync()
         {
-            if (db != null)
+            if (_db != null)
             {
                 return;
             }
+
             var databasePath = Path.Combine(FileSystem.AppDataDirectory, "BookStorage.db");
-            db = new SQLiteAsyncConnection(databasePath);
+            _db = new SQLiteAsyncConnection(databasePath);
+
             try
             {
-                await db.CreateTableAsync<ReadBookModel>();
+                await _db.CreateTableAsync<ReadBookModel>();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"Error initializing database: {ex.Message}");
             }
-            
-
         }
-        public static async Task AddBook(BookModel book)
+
+        public static async Task AddBookToStorageAsync(BookModel book)
         {
-            await Init();
-            var readbooklocal = new ReadBookModel
+            await InitializeAsync();
+
+            var readBook = new ReadBookModel
             {
                 Title = book.Title,
-                Authors = book.Authors,
-                Description = book.Description,
-                PublishedDate = book.PublishedDate,
-                Thumbnail = book.Thumbnail.ToString(),
-                ReadDate = ""
+                Authors = book.Authors ?? string.Empty,
+                Description = book.Description ?? string.Empty,
+                PublishedDate = book.PublishedDate ?? string.Empty,
+                Thumbnail = book.Thumbnail?.ToString() ?? string.Empty,
+                ReadDate = DateTime.UtcNow.ToString("yyyy-MM-dd")
             };
-            var id = await db.InsertAsync(readbooklocal); 
-        }
-        public static async Task RemoveBook(ReadBookModel book)
-        {
-            await Init();
 
-            await db.DeleteAsync<ReadBookModel>(book.Id);
+            try
+            {
+                await _db.InsertAsync(readBook);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error adding book: {ex.Message}");
+            }
         }
-        public  static async Task<List<ReadBookModel>> GetBooks()
+
+        public static async Task RemoveBookFromStorageAsync(ReadBookModel book)
         {
-            await Init();
-            var LocalBooks = await db.Table<ReadBookModel>().ToListAsync();
-            return LocalBooks;
+            await InitializeAsync();
+
+            try
+            {
+                await _db.DeleteAsync<ReadBookModel>(book.Id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error removing book: {ex.Message}");
+            }
+        }
+
+        public static async Task<List<ReadBookModel>> GetAllBooksAsync()
+        {
+            await InitializeAsync();
+
+            try
+            {
+                var localBooks = await _db.Table<ReadBookModel>().ToListAsync();
+                return localBooks;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving books: {ex.Message}");
+                return new List<ReadBookModel>();
+            }
         }
     }
 }

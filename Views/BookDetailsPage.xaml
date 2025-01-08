@@ -6,34 +6,34 @@
     <ScrollView>
         <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto">
             <Button Text="Mark as Read"
-                    Command="{Binding AddLocalBookCommand}"
+                    Command="{Binding AddBookToLibraryCommand}"
                     VerticalOptions="Center"
                     HorizontalOptions="FillAndExpand"
                     Margin="0,10"
                     Grid.Row="1"/>
-            <Image Source="{Binding Book.Thumbnail}"
+            <Image Source="{Binding CurrentBook.Thumbnail}"
    HeightRequest="120"
    WidthRequest="100"
    HorizontalOptions="Start"
    VerticalOptions="CenterAndExpand"
    Grid.Row="0"/>
         <Label 
-            Text="{Binding Book.Title}"
+            Text="{Binding CurrentBook.Title}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" 
             Grid.Row="1"/>
         <Label 
-    Text="{Binding Book.Authors}"
+    Text="{Binding CurrentBook.Authors}"
     VerticalOptions="Center" 
     HorizontalOptions="Center" 
             Grid.Row="2"/>
         <Label 
-    Text="{Binding Book.Description}"
+    Text="{Binding CurrentBook.Description}"
     VerticalOptions="Center" 
     HorizontalOptions="Center" 
             Grid.Row="3"/>
         <Label 
-    Text="{Binding Book.PublishedDate}"
+    Text="{Binding CurrentBook.PublishedDate}"
     VerticalOptions="Center" 
     HorizontalOptions="Center" 
             Grid.Row="4"/>

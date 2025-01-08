@@ -3,40 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BooksHaven.Views.LocalBookDetailsPage"
              Title="LocalBookDetailsPage">
-    <ScrollView>
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
-            <Button Text="Mark as Read"
-        Command="{Binding DeleteLocalBookCommand}"
-        VerticalOptions="Center"
-        HorizontalOptions="FillAndExpand"
-        Margin="0,10"
-        Grid.Row="0"/>
-            <Image Source="{Binding Book.Thumbnail}"
-HeightRequest="120"
-WidthRequest="100"
-HorizontalOptions="Start"
-VerticalOptions="CenterAndExpand"
-Grid.Row="1"/>
+    <Grid RowDefinitions="Auto, *, Auto, Auto" Padding="20">
+        <!-- Book Title -->
+        <Label 
+            Text="{Binding SelectedBook.Title}" 
+            FontSize="20"
+            HorizontalOptions="Center"
+            Grid.Row="0" />
+
+        <!-- Book Description -->
+        <ScrollView Grid.Row="1">
             <Label 
-         Text="{Binding Book.Title}"
-         VerticalOptions="Center" 
-         HorizontalOptions="Center" 
-         Grid.Row="2"/>
-            <Label 
- Text="{Binding Book.Authors}"
- VerticalOptions="Center" 
- HorizontalOptions="Center" 
-         Grid.Row="3"/>
-            <Label 
- Text="{Binding Book.Description}"
- VerticalOptions="Center" 
- HorizontalOptions="Center" 
-         Grid.Row="4"/>
-            <Label 
- Text="{Binding Book.PublishedDate}"
- VerticalOptions="Center" 
- HorizontalOptions="Center" 
-         Grid.Row="5"/>
-        </Grid>
-    </ScrollView>
+                Text="{Binding SelectedBook.Description}" 
+                FontSize="16" 
+                TextColor="Gray" />
+        </ScrollView>
+
+        <!-- Delete Button -->
+        <Button 
+            Text="Delete from Library"
+            Command="{Binding DeleteBookFromLibraryCommand}"
+            IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}"
+            BackgroundColor="Red" 
+            TextColor="White"
+            Grid.Row="2" />
+
+        <!-- Status Message -->
+        <Label 
+            Text="{Binding StatusMessage}" 
+            TextColor="Green" 
+            HorizontalOptions="Center" 
+            VerticalOptions="End"
+            Grid.Row="3" />
+    </Grid>
 </ContentPage>

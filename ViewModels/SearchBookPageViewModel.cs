@@ -3,73 +3,89 @@ using System.Net.Http.Json;
 using BooksHaven.Models;
 using BooksHaven.Services;
 using BooksHaven.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
+namespace BooksHaven.ViewModels;
 
-
-namespace BooksHaven.ViewModels
+public partial class SearchBookPageViewModel : BaseViewModel
 {
-    public partial class SearchBookPageViewModel :BaseViewModel
+    private readonly GoogleBooksService _googleBooksService;
+
+    public ObservableCollection<BookModel> Books { get; }
+
+    public AsyncRelayCommand SearchBooksCommand { get; }
+    public AsyncRelayCommand<BookModel> NavigateToDetailsCommand { get; }
+
+    public SearchBookPageViewModel()
     {
-        private GoogleBooksService _googleBooksSerice=new GoogleBooksService();
-        private string _searchQuery;
-        public string SearchQuery
-        {
-            get => _searchQuery;
-            set => SetProperty(ref _searchQuery, value);
-        }
+        _googleBooksService = new GoogleBooksService();
+        Books = new ObservableCollection<BookModel>();
 
-        public ObservableCollection<BookModel> Books { get; set; } = new ObservableCollection<BookModel>();
-
-        public Command SearchCommand { get; }
-
-        public SearchBookPageViewModel()
-        {
-            
-            SearchCommand = new Command(async () => await GetBooksFromAPI());
-        }
-
-        private async Task GetBooksFromAPI()
-        {
-            if (string.IsNullOrWhiteSpace(SearchQuery)) return;
-
-            Books.Clear();
-
-            try
-            {
-                var response = await _googleBooksSerice.SearchBooksAsync(SearchQuery);
-                if (response.Count() > 0)
-                {
-                    foreach (var book in response)
-                    {
-                        Books.Add(book);
-                    }
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert("No results","No books found with this query", "OK");
-
-                }
-            }
-            catch (Exception ex)
-            {
-                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
-            }
-           
-        }
-        [RelayCommand]
-        async Task GoToDetailsAsync(BookModel book)
-        {
-            if (book is null)
-            {
-                return;
-            }
-            await Shell.Current.GoToAsync($"{nameof(BookDetailsPage)}", true,
-                new Dictionary<string, object>
-                {
-                    {"Book",book }
-                });
-        }
-
+        SearchBooksCommand = new AsyncRelayCommand(SearchBooksAsync);
+        NavigateToDetailsCommand = new AsyncRelayCommand<BookModel>(NavigateToDetailsAsync);
     }
+
+    [ObservableProperty]
+    private string searchQuery;
+
+    [ObservableProperty]
+    private bool isBusy;
+
+
+    private async Task SearchBooksAsync()
+    {
+        if (string.IsNullOrWhiteSpace(searchQuery))
+        {
+            return;
+        }
+
+        if (isBusy) return;
+
+        isBusy = true;
+        Books.Clear();
+
+        try
+        {
+            var results = await _googleBooksService.SearchBooksByQueryAsync(SearchQuery);
+            if (results.Any())
+            {
+                foreach (var book in results)
+                {
+                    Books.Add(book);
+                }            }
+            else
+            {
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching books: {ex.Message}");
+        }
+        finally
+        {
+            isBusy = false;
+        }
+    }
+    private async Task NavigateToDetailsAsync(BookModel book)
+    {
+        if (book is null)
+        {
+            return;
+        }
+
+        try
+        {
+            await Shell.Current.GoToAsync($"{nameof(BookDetailsPage)}", true, new Dictionary<string, object>
+            {
+                { "Book", book }
+            });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error navigating to details page: {ex.Message}");
+        }
+    }
+
+
 }

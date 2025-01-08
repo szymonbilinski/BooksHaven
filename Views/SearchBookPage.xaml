@@ -15,7 +15,7 @@
                        Grid.Row="0"/>
 
             <Button Text="Search"
-                    Command="{Binding SearchCommand}"
+                    Command="{Binding SearchBooksCommand}"
                     VerticalOptions="Center"
                     HorizontalOptions="FillAndExpand"
                     Margin="0,10"
@@ -31,7 +31,7 @@
                         <Frame Style="{StaticResource BookCardView}">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer CommandParameter="{Binding .}"
-                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SearchBookPageViewModel}},Path=GoToDetailsCommand}"/>
+                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SearchBookPageViewModel}},Path=NavigateToDetailsCommand}"/>
                                 
                             </Frame.GestureRecognizers>
                         <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*,*" ColumnSpacing="5" RowSpacing="0">
