@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BooksHaven.Views.BookDetailsPage"
+             Title="BookDetailsPage">
+    <VerticalStackLayout>
+        <Image Source="{Binding Book.Thumbnail}"
+   HeightRequest="120"
+   WidthRequest="100"
+   HorizontalOptions="Start"
+   VerticalOptions="CenterAndExpand"
+   Grid.Column="0"/>
+        <Label 
+            Text="{Binding Book.Title}"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Label 
+    Text="{Binding Book.Authors}"
+    VerticalOptions="Center" 
+    HorizontalOptions="Center" />
+        <Label 
+    Text="{Binding Book.Description}"
+    VerticalOptions="Center" 
+    HorizontalOptions="Center" />
+        <Label 
+    Text="{Binding Book.PublishedDate}"
+    VerticalOptions="Center" 
+    HorizontalOptions="Center" />
+        
+    </VerticalStackLayout>
+</ContentPage>

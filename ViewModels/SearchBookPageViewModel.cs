@@ -1,10 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using System.Net.Http.Json;
 using BooksHaven.Models;
+using BooksHaven.Views;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BooksHaven.ViewModels
 {
-    public class SearchBookPageViewModel :BaseViewModel
+    public partial class SearchBookPageViewModel :BaseViewModel
     {
         private string _searchQuery;
         public string SearchQuery
@@ -41,6 +43,8 @@ namespace BooksHaven.ViewModels
                         Books.Add(new BookModel
                         {
                             Title = item.VolumeInfo.Title ?? "No Title Available",
+                            Description = item.VolumeInfo.Description ?? "No Description Available",
+                            PublishedDate = item.VolumeInfo.PublishedDate ?? "No Published Date Available",
                             Authors = item.VolumeInfo.Authors != null
                                 ? string.Join(", ", item.VolumeInfo.Authors)
                                 : "Unknown Author",
@@ -55,5 +59,19 @@ namespace BooksHaven.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
             }
         }
+        [RelayCommand]
+        async Task GoToDetailsAsync(BookModel book)
+        {
+            if (book is null)
+            {
+                return;
+            }
+            await Shell.Current.GoToAsync($"{nameof(BookDetailsPage)}", true,
+                new Dictionary<string, object>
+                {
+                    {"Book",book }
+                });
+        }
+
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using BooksHaven.ViewModels;
+using BooksHaven.Views;
+using Microsoft.Extensions.Logging;
 
 namespace BooksHaven
 {
@@ -14,6 +16,9 @@ namespace BooksHaven
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            builder.Services.AddTransient<BookDetailsPageViewModel>();
+            builder.Services.AddTransient<BookDetailsPage>();
 
 #if DEBUG
     		builder.Logging.AddDebug();
