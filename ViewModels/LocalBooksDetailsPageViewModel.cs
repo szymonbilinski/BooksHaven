@@ -11,19 +11,20 @@ using System.Threading.Tasks;
 namespace BooksHaven.ViewModels;
 
 [QueryProperty("Book", "Book")]
-
-public partial class BookDetailsPageViewModel : BaseViewModel
+public partial class LocalBooksDetailsPageViewModel : BaseViewModel
 {
-    public AsyncCommand AddLocalBookCommand { get; }
-    public BookDetailsPageViewModel() 
+    public AsyncCommand DeleteLocalBookCommand { get; }
+    public LocalBooksDetailsPageViewModel() 
     {
-        AddLocalBookCommand = new AsyncCommand(AddLocalBook);
+        DeleteLocalBookCommand = new AsyncCommand(DeleteLocalBook);
     }
     [ObservableProperty]
-    BookModel book;
+    ReadBookModel book;
 
-    async Task AddLocalBook()
+    async Task DeleteLocalBook()
     {
-        await BookStorageService.AddBook(book);
+        await BookStorageService.RemoveBook(book);
     }
+
+    
 }

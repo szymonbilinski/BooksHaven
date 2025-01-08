@@ -20,8 +20,11 @@ namespace BooksHaven
             builder.Services.AddTransient<BookDetailsPageViewModel>();
             builder.Services.AddTransient<BookDetailsPage>();
 
+            builder.Services.AddTransient<LocalBooksDetailsPageViewModel>();
+            builder.Services.AddTransient<LocalBookDetailsPage>();
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

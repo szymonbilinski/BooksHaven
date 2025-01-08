@@ -8,6 +8,7 @@ namespace BooksHaven
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(BookDetailsPage),typeof(BookDetailsPage));
+            Routing.RegisterRoute(nameof(LocalBookDetailsPage), typeof(LocalBookDetailsPage));
         }
     }
 }
