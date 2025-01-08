@@ -3,29 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BooksHaven.Views.BookDetailsPage"
              Title="BookDetailsPage">
-    <VerticalStackLayout>
+    <ScrollView>
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto">
         <Image Source="{Binding Book.Thumbnail}"
    HeightRequest="120"
    WidthRequest="100"
    HorizontalOptions="Start"
    VerticalOptions="CenterAndExpand"
-   Grid.Column="0"/>
+   Grid.Row="0"/>
         <Label 
             Text="{Binding Book.Title}"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center" 
+            Grid.Row="1"/>
         <Label 
     Text="{Binding Book.Authors}"
     VerticalOptions="Center" 
-    HorizontalOptions="Center" />
+    HorizontalOptions="Center" 
+            Grid.Row="2"/>
         <Label 
     Text="{Binding Book.Description}"
     VerticalOptions="Center" 
-    HorizontalOptions="Center" />
+    HorizontalOptions="Center" 
+            Grid.Row="3"/>
         <Label 
     Text="{Binding Book.PublishedDate}"
     VerticalOptions="Center" 
-    HorizontalOptions="Center" />
-        
-    </VerticalStackLayout>
+    HorizontalOptions="Center" 
+            Grid.Row="4"/>
+        </Grid>
+    </ScrollView>
 </ContentPage>
