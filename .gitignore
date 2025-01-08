@@ -33,7 +33,7 @@ Release/
 Thumbs.db
 
 # API Keys or Secrets
-Secrets.json
+
 appsettings.json
 
 # Android/Gradle
