@@ -23,6 +23,11 @@ public partial class BookDetailsPageViewModel : BaseViewModel
     [ObservableProperty]
     private bool isBusy;
 
+    partial void OnCurrentBookChanged(BookModel value)
+    {
+        OnPropertyChanged(nameof(CurrentBook));
+    }
+
     private async Task AddBookToLibraryAsync()
     {
         if (currentBook == null)

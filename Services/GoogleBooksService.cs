@@ -7,22 +7,25 @@ namespace BooksHaven.Services
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiKey;
+        Constants constants = new Constants();
 
         public GoogleBooksService()
         {
-            string apiKey = "AIzaSyDf9fKn9ZpbsF2LoSYnDBZkIGWl5_0WVgw"; //Example Api Key
+            
+            //string apiKey = "AIzaSyDf9fKn9ZpbsF2LoSYnDBZkIGWl5_0WVgw"; //Example Api Key
+            string apiKey = constants.APIKEY;
             _httpClient = new HttpClient();
             _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
         }
 
-        public async Task<List<BookModel>> SearchBooksByQueryAsync(string query)
+        public async Task<List<BookModel>> SearchBooksByQueryAsync(string query,int startIndex)
         {
             if (string.IsNullOrWhiteSpace(query))
             {
                 throw new ArgumentException("Query cannot be empty", nameof(query));
             }
 
-            var url = $"https://www.googleapis.com/books/v1/volumes?q={query}&maxResults=40&key={_apiKey}";
+            var url = $"https://www.googleapis.com/books/v1/volumes?q={query}&startIndex={startIndex}&maxResults=20&key={_apiKey}";
 
             try
             {

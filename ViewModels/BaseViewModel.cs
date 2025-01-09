@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace BooksHaven.ViewModels
 {
-    public class BaseViewModel : ObservableObject
+    public class BaseViewModel : ObservableObject, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

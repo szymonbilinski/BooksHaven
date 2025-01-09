@@ -35,6 +35,7 @@ Thumbs.db
 # API Keys or Secrets
 secrets.json
 appsettings.json
+Constants.cs
 
 # Android/Gradle
 .gradle/

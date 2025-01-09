@@ -2,8 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:BooksHaven.ViewModels"
+             xmlns:model="clr-namespace:BooksHaven.Models"
+             x:DataType="viewmodel:SearchBookPageViewModel"
              x:Class="BooksHaven.Views.SearchBookPage">
-    <ScrollView>
+
+    <Grid RowDefinitions="*,Auto">
+    <ScrollView Grid.Row="0">
         <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="#ECECEC">
 
         <!-- Search Bar -->
@@ -18,7 +22,7 @@
                         VerticalOptions="FillAndExpand"
                         BackgroundColor="Transparent">
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="model:BookModel">
                     <Frame Style="{StaticResource BookCardView}">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer CommandParameter="{Binding .}" 
@@ -51,4 +55,12 @@
         
     </VerticalStackLayout>
     </ScrollView>
+        <Border Grid.Row="1">
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Button Text="&lt;" Command="{Binding GoToPreviousPageCommand}"/>
+                <Label Text="{Binding CurrentPage,Mode=TwoWay}" Padding="10"/>
+                <Button Text="&gt;" Command="{Binding GoToNextPageCommand}"/>
+            </HorizontalStackLayout>
+        </Border>
+    </Grid>
 </ContentPage>

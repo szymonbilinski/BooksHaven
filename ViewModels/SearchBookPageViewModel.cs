@@ -36,6 +36,28 @@ public partial class SearchBookPageViewModel : BaseViewModel
     [ObservableProperty]
     private bool isBusy;
 
+    [ObservableProperty]
+    private int currentPage=1;
+
+    private int startIndex = 0;
+
+    [RelayCommand]
+    private async Task GoToNextPage()
+    {
+        currentPage++;
+        await SearchBooksAsync();
+        OnPropertyChanged(nameof(CurrentPage));
+    }
+    [RelayCommand]
+    private async Task GoToPreviousPage()
+    {
+        if (currentPage > 1)
+        {
+            currentPage--;
+            await SearchBooksAsync();
+            OnPropertyChanged(nameof(CurrentPage));
+        }
+    }
 
     private bool CheckForInternetConnection()
     {
@@ -67,7 +89,8 @@ public partial class SearchBookPageViewModel : BaseViewModel
 
         try
         {
-            var results = await _googleBooksService.SearchBooksByQueryAsync(SearchQuery);
+            var startIndexHelper = startIndex + ((currentPage - 1)*20);
+            var results = await _googleBooksService.SearchBooksByQueryAsync(SearchQuery,startIndexHelper);
             if (results.Any())
             {
                 foreach (var book in results)
