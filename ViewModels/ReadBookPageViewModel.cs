@@ -43,17 +43,16 @@ public partial class ReadBookPageViewModel : BaseViewModel
             if (booksFromStorage != null && booksFromStorage.Count > 0)
             {
                 LocalBooks.AddRange(booksFromStorage);
-                ShowMessage($"{booksFromStorage.Count} book(s) loaded.");
             }
             else
             {
-                ShowMessage("No books found in your library.");
+                await App.Current.MainPage.DisplayAlert("Error", "No books found in your library.", "OK");
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error loading books: {ex.Message}");
-            ShowMessage("An error occurred while loading books. Please try again.");
+            await App.Current.MainPage.DisplayAlert("Error", "An error occurred while loading books. Please try again.", "OK");
         }
         finally
         {
@@ -67,7 +66,7 @@ public partial class ReadBookPageViewModel : BaseViewModel
     {
         if (selectedBook == null)
         {
-            ShowMessage("No book selected.");
+            await App.Current.MainPage.DisplayAlert("Wrong", "You did not select any book", "OK");
             return;
         }
 
@@ -81,11 +80,8 @@ public partial class ReadBookPageViewModel : BaseViewModel
         catch (Exception ex)
         {
             Console.WriteLine($"Error navigating to details page: {ex.Message}");
-            ShowMessage("An error occurred while navigating to the details page.");
+            await App.Current.MainPage.DisplayAlert("Error", "An error occurred while navigating to the details page.", "OK");
         }
     }
-    private void ShowMessage(string message)
-    {
-        statusMessage = message;
-    }
+
 }

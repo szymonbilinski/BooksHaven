@@ -37,6 +37,7 @@ public partial class SearchBookPageViewModel : BaseViewModel
     {
         if (string.IsNullOrWhiteSpace(searchQuery))
         {
+            await App.Current.MainPage.DisplayAlert("Wrong", "Plase provide book title or authors", "OK");
             return;
         }
 
@@ -60,7 +61,7 @@ public partial class SearchBookPageViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error fetching books: {ex.Message}");
+            await App.Current.MainPage.DisplayAlert("Error", "An error occurred while searching for books.", "OK");
         }
         finally
         {
@@ -83,7 +84,7 @@ public partial class SearchBookPageViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error navigating to details page: {ex.Message}");
+            await App.Current.MainPage.DisplayAlert("Error", "An error occurred while navigating to the details page.", "OK");
         }
     }
 

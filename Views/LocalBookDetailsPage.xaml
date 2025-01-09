@@ -44,9 +44,6 @@
                     IsEnabled="{Binding IsBusy}"
                     Style="{StaticResource PrimaryButtonStyle}" />
 
-            <!-- Status Message -->
-            <Label Text="{Binding StatusMessage}" 
-                   Style="{StaticResource StatusMessageStyle}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -23,14 +23,11 @@ public partial class BookDetailsPageViewModel : BaseViewModel
     [ObservableProperty]
     private bool isBusy;
 
-    [ObservableProperty]
-    private string statusMessage;
-
     private async Task AddBookToLibraryAsync()
     {
         if (currentBook == null)
         {
-            ShowMessage("No book selected to add.");
+            await App.Current.MainPage.DisplayAlert("No books", "You didn't select Books", "OK");
             return;
         }
 
@@ -39,14 +36,14 @@ public partial class BookDetailsPageViewModel : BaseViewModel
         {
             var result = await BookStorageService.AddBookToStorageAsync(currentBook);
             if (result == true)
-                ShowMessage("Book successfully added to your library.");
+                await App.Current.MainPage.DisplayAlert("Added", "Book successfully added to your library.", "OK");
             else
-                ShowMessage("This book is already saved as read.");
+                await App.Current.MainPage.DisplayAlert("Wrong", "You already have this book in you library", "OK");
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error adding book to library: {ex.Message}");
-            ShowMessage("An error occurred while adding the book. Please try again.");
+            await App.Current.MainPage.DisplayAlert("Error", "An error occurred while deleting the book. Please try again.", "OK");
         }
         finally
         {
@@ -55,8 +52,4 @@ public partial class BookDetailsPageViewModel : BaseViewModel
     }
 
 
-    private void ShowMessage(string message)
-    {
-        StatusMessage = message;
-    }
 }

@@ -23,14 +23,12 @@ public partial class LocalBooksDetailsPageViewModel : BaseViewModel
     [ObservableProperty]
     private bool isBusy=true;
 
-    [ObservableProperty]
-    private string statusMessage;
 
     private async Task DeleteBookFromLibraryAsync()
     {
         if (selectedBook == null)
         {
-            ShowMessage("No book selected to delete.");
+            await App.Current.MainPage.DisplayAlert("No books", "You didn't select Books", "OK");
             return;
         }
 
@@ -38,24 +36,18 @@ public partial class LocalBooksDetailsPageViewModel : BaseViewModel
         try
         {
             await BookStorageService.RemoveBookFromStorageAsync(SelectedBook);
-            ShowMessage("Book successfully removed from your library.");
-
+            await App.Current.MainPage.DisplayAlert("Deleted", "Book successfully removed from your library.", "OK");
             await Shell.Current.GoToAsync("..");
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error deleting book: {ex.Message}");
-            ShowMessage("An error occurred while deleting the book. Please try again.");
+            await App.Current.MainPage.DisplayAlert("Error", "An error occurred while deleting the book. Please try again.", "OK");
         }
         finally
         {
             IsBusy = false;
         }
-        IsBusy = false;
     }
 
-    private void ShowMessage(string message)
-    {
-        StatusMessage = message;
-    }
 }
