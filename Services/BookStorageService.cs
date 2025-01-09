@@ -1,5 +1,6 @@
 ﻿using BooksHaven.Models;
 using SQLite;
+using System.Collections.Generic;
 
 namespace BooksHaven.Services
 {
@@ -27,9 +28,13 @@ namespace BooksHaven.Services
             }
         }
 
-        public static async Task AddBookToStorageAsync(BookModel book)
+        public static async Task<bool> AddBookToStorageAsync(BookModel book)
         {
             await InitializeAsync();
+
+            var existingBooks = await _db.Table<ReadBookModel>().Where(x => x.Title == book.Title && x.Authors == book.Authors && x.PublishedDate == book.PublishedDate).ToListAsync();
+
+            if(existingBooks.Count > 0) { return false; }
 
             var readBook = new ReadBookModel
             {
@@ -37,7 +42,7 @@ namespace BooksHaven.Services
                 Authors = book.Authors ?? string.Empty,
                 Description = book.Description ?? string.Empty,
                 PublishedDate = book.PublishedDate ?? string.Empty,
-                Thumbnail = book.Thumbnail?.ToString() ?? string.Empty,
+                Thumbnail = book.Thumbnail?.ToString().Remove(0,5) ?? string.Empty,
                 ReadDate = DateTime.UtcNow.ToString("yyyy-MM-dd")
             };
 
@@ -49,11 +54,14 @@ namespace BooksHaven.Services
             {
                 Console.WriteLine($"Error adding book: {ex.Message}");
             }
+            return true;
         }
 
         public static async Task RemoveBookFromStorageAsync(ReadBookModel book)
         {
             await InitializeAsync();
+
+
 
             try
             {

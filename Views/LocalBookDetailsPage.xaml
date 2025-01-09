@@ -2,38 +2,51 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BooksHaven.Views.LocalBookDetailsPage"
-             Title="LocalBookDetailsPage">
-    <Grid RowDefinitions="Auto, *, Auto, Auto" Padding="20">
-        <!-- Book Title -->
-        <Label 
-            Text="{Binding SelectedBook.Title}" 
-            FontSize="20"
-            HorizontalOptions="Center"
-            Grid.Row="0" />
+             Title="Book Details">
 
-        <!-- Book Description -->
-        <ScrollView Grid.Row="1">
-            <Label 
-                Text="{Binding SelectedBook.Description}" 
-                FontSize="16" 
-                TextColor="Gray" />
-        </ScrollView>
+    <ScrollView>
+        <VerticalStackLayout BackgroundColor="#ECECEC">
+            
+            <!-- Book Thumbnail -->
+            <Image Source="{Binding SelectedBook.Thumbnail}" 
+                   Style="{StaticResource BookDetailThumbnailStyle}" 
+                   Aspect="AspectFit" />
+            <!-- Book Title -->
+            <Label Text="{Binding SelectedBook.Title}" 
+                   Style="{StaticResource BookDetailTitleStyle}" />
 
-        <!-- Delete Button -->
-        <Button 
-            Text="Delete from Library"
-            Command="{Binding DeleteBookFromLibraryCommand}"
-            IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}"
-            BackgroundColor="Red" 
-            TextColor="White"
-            Grid.Row="2" />
+            <!-- Book Authors -->
+            <Label Text="{Binding SelectedBook.Authors}" 
+                   Style="{StaticResource BookDetailAuthorStyle}" />
 
-        <!-- Status Message -->
-        <Label 
-            Text="{Binding StatusMessage}" 
-            TextColor="Green" 
-            HorizontalOptions="Center" 
-            VerticalOptions="End"
-            Grid.Row="3" />
-    </Grid>
+            <!-- Published Date -->
+            <Label Text="{Binding SelectedBook.PublishedDate}" 
+                   Style="{StaticResource BookPublishedDateStyle}" />
+
+            <Border Padding="10" Margin="0" BackgroundColor="White">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="30,30,0,0"/>
+                </Border.StrokeShape>
+                <StackLayout>
+                    <Label Text="Description" FontSize="Large" FontAttributes="Bold" Padding="10"/>
+                    <!-- Book Description -->
+                <ScrollView>
+                    <Label Text="{Binding SelectedBook.Description}" 
+                       Style="{StaticResource BookDetailDescriptionStyle}" />
+                </ScrollView>
+                </StackLayout>
+                
+            </Border>
+
+            <!-- Delete Button -->
+            <Button Text="Didn't read yet?"
+                    Command="{Binding DeleteBookFromLibraryCommand}"
+                    IsEnabled="{Binding IsBusy}"
+                    Style="{StaticResource PrimaryButtonStyle}" />
+
+            <!-- Status Message -->
+            <Label Text="{Binding StatusMessage}" 
+                   Style="{StaticResource StatusMessageStyle}" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

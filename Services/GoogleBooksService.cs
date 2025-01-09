@@ -10,7 +10,7 @@ namespace BooksHaven.Services
 
         public GoogleBooksService()
         {
-            string apiKey = "";
+            string apiKey = "AIzaSyDf9fKn9ZpbsF2LoSYnDBZkIGWl5_0WVgw";
             _httpClient = new HttpClient();
             _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
         }
@@ -22,7 +22,7 @@ namespace BooksHaven.Services
                 throw new ArgumentException("Query cannot be empty", nameof(query));
             }
 
-            var url = $"https://www.googleapis.com/books/v1/volumes?q={query}&key={_apiKey}";
+            var url = $"https://www.googleapis.com/books/v1/volumes?q={query}&maxResults=40&key={_apiKey}";
 
             try
             {

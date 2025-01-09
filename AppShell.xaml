@@ -5,24 +5,24 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:BooksHaven"
     xmlns:views="clr-namespace:BooksHaven.Views"
-    Shell.FlyoutBehavior="Flyout"
-    Shell.TabBarIsVisible = "False"
-    Title="BooksHaven">
+    Shell.FlyoutBehavior="Disabled"
+    Shell.TabBarIsVisible = "True"
+    Title="Books Haven">
 
-    <FlyoutItem Title="Home" FlyoutDisplayOptions="AsMultipleItems">
+
+
+    <TabBar Title="Home">
         <ShellContent
-            Title="HomePage"
-            ContentTemplate="{DataTemplate views:HomePage}"
-            Route="HomePage" />
-        <ShellContent
-            Title="SearchBookPage"
+            Title="Search for Books"
             ContentTemplate="{DataTemplate views:SearchBookPage}"
-            Route="SearchBookPage" />
+            Route="SearchBookPage"
+            Icon="search.png"/>
         <ShellContent
-            Title="ReadBookPage"
+            Title="Your Read Books"
             ContentTemplate="{DataTemplate views:ReadBookPage}"
-            Route="ReadBookPage" />
-    </FlyoutItem>
+            Route="ReadBookPage" 
+            Icon="read.png"/>
+    </TabBar>
     
 
 </Shell>

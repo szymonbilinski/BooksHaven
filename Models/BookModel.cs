@@ -9,5 +9,8 @@ namespace BooksHaven.Models
         public string? Description { get; set; }
         public string? PublishedDate { get; set; }
         public ImageSource? Thumbnail { get; set; }
+
+        
+
     }
 }

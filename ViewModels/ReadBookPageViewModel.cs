@@ -11,16 +11,16 @@ namespace BooksHaven.ViewModels;
 
 public partial class ReadBookPageViewModel : BaseViewModel
 {
-    // Collection for displaying local books
     public ObservableRangeCollection<ReadBookModel> LocalBooks { get; set; }
+    public ObservableRangeCollection<BookModel> booksToShow { get; set; }
 
-    // Commands
     public AsyncRelayCommand GetLocalBooksCommand { get; }
     public ICommand NavigateToDetailsCommand { get; }
 
     public ReadBookPageViewModel()
     {
         LocalBooks = new ObservableRangeCollection<ReadBookModel>();
+        booksToShow = new ObservableRangeCollection<BookModel>();
         GetLocalBooksCommand = new AsyncRelayCommand(LoadBooksAsync);
         NavigateToDetailsCommand = new AsyncRelayCommand<ReadBookModel>(NavigateToDetailsAsync);
     }
@@ -31,10 +31,7 @@ public partial class ReadBookPageViewModel : BaseViewModel
     [ObservableProperty]
     private string statusMessage;
 
-    /// <summary>
-    /// Loads books from local storage into the LocalBooks collection.
-    /// </summary>
-    private async Task LoadBooksAsync()
+    public async Task LoadBooksAsync()
     {
         if (isBusy) return;
 
@@ -64,6 +61,7 @@ public partial class ReadBookPageViewModel : BaseViewModel
         }
     }
 
+ 
 
     private async Task NavigateToDetailsAsync(ReadBookModel selectedBook)
     {
@@ -86,11 +84,6 @@ public partial class ReadBookPageViewModel : BaseViewModel
             ShowMessage("An error occurred while navigating to the details page.");
         }
     }
-
-    /// <summary>
-    /// Updates the status message for the user interface.
-    /// </summary>
-    /// <param name="message">Message to display.</param>
     private void ShowMessage(string message)
     {
         statusMessage = message;

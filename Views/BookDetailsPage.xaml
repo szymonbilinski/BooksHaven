@@ -2,41 +2,49 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BooksHaven.Views.BookDetailsPage"
-             Title="BookDetailsPage">
+             Title="Book Details">
+
     <ScrollView>
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+        <VerticalStackLayout BackgroundColor="#ECECEC">
+
+            <!-- Book Thumbnail -->
+            <Image Source="{Binding CurrentBook.Thumbnail}"
+                   HorizontalOptions="Center" 
+                   Style="{StaticResource BookDetailThumbnailStyle}"/>
+
+            <!-- Book Title -->
+            <Label Text="{Binding CurrentBook.Title}"
+                   HorizontalTextAlignment="Center"
+                   Style="{StaticResource BookDetailTitleStyle}" />
+
+            <!-- Book Authors -->
+            <Label Text="{Binding CurrentBook.Authors}"
+                   HorizontalTextAlignment="Center"
+                   Style="{StaticResource BookDetailAuthorStyle}" />
+            
+            <Label Text="{Binding CurrentBook.PublishedDate}"
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource BookPublishedDateStyle}" />
+            <Border Padding="10" Margin="0" BackgroundColor="White">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="30,30,0,0"/>
+                </Border.StrokeShape>
+                <StackLayout>
+                    <Label Text="Description" FontSize="Large" FontAttributes="Bold" Padding="10"/>
+
+            <Label Text="{Binding CurrentBook.Description}"
+                   HorizontalTextAlignment="Center"
+                   Style="{StaticResource BookDetailDescriptionStyle}" />
+
+                </StackLayout>
+
+            </Border>
+
+            <!-- Mark as Read Button -->
             <Button Text="Mark as Read"
                     Command="{Binding AddBookToLibraryCommand}"
-                    VerticalOptions="Center"
                     HorizontalOptions="FillAndExpand"
-                    Margin="0,10"
-                    Grid.Row="1"/>
-            <Image Source="{Binding CurrentBook.Thumbnail}"
-   HeightRequest="120"
-   WidthRequest="100"
-   HorizontalOptions="Start"
-   VerticalOptions="CenterAndExpand"
-   Grid.Row="0"/>
-        <Label 
-            Text="{Binding CurrentBook.Title}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" 
-            Grid.Row="1"/>
-        <Label 
-    Text="{Binding CurrentBook.Authors}"
-    VerticalOptions="Center" 
-    HorizontalOptions="Center" 
-            Grid.Row="2"/>
-        <Label 
-    Text="{Binding CurrentBook.Description}"
-    VerticalOptions="Center" 
-    HorizontalOptions="Center" 
-            Grid.Row="3"/>
-        <Label 
-    Text="{Binding CurrentBook.PublishedDate}"
-    VerticalOptions="Center" 
-    HorizontalOptions="Center" 
-            Grid.Row="4"/>
-        </Grid>
+                    Style="{StaticResource PrimaryButtonStyle}" />
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

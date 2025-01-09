@@ -10,7 +10,7 @@
         }
         protected override async void OnStart()
         {
-            await Shell.Current.GoToAsync("//HomePage");
+            await Shell.Current.GoToAsync("//SearchBookPage");
             base.OnStart();
         }
     }

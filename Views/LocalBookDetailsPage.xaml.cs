@@ -9,4 +9,5 @@ public partial class LocalBookDetailsPage : ContentPage
 		InitializeComponent();
 		BindingContext = new LocalBooksDetailsPageViewModel();
 	}
+    
 }

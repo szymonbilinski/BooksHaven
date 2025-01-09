@@ -37,8 +37,11 @@ public partial class BookDetailsPageViewModel : BaseViewModel
         IsBusy = true;
         try
         {
-            await BookStorageService.AddBookToStorageAsync(currentBook);
-            ShowMessage("Book successfully added to your library.");
+            var result = await BookStorageService.AddBookToStorageAsync(currentBook);
+            if (result == true)
+                ShowMessage("Book successfully added to your library.");
+            else
+                ShowMessage("This book is already saved as read.");
         }
         catch (Exception ex)
         {
