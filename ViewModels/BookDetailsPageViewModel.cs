@@ -15,13 +15,24 @@ public partial class BookDetailsPageViewModel : BaseViewModel
     public BookDetailsPageViewModel()
     {
         AddBookToLibraryCommand = new AsyncCommand(AddBookToLibraryAsync);
+      
     }
+
 
     [ObservableProperty]
     private BookModel currentBook;
 
     [ObservableProperty]
     private bool isBusy;
+
+
+    partial void OnCurrentBookChanged(BookModel value)
+    {
+        // Optional: Log the book data when it changes
+        Console.WriteLine($"Current Book Changed: {value?.Title}");
+        OnPropertyChanged(nameof(CurrentBook));
+    }
+
 
     private async Task AddBookToLibraryAsync()
     {

@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace BooksHaven.ViewModels
 {
-    public class BaseViewModel : ObservableObject
+    public class BaseViewModel : ObservableObject , INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -18,7 +18,7 @@ namespace BooksHaven.ViewModels
             }
             return true;
         }
-
+         
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Net.Http.Json;
 using BooksHaven.Models;
 using BooksHaven.Services;
@@ -16,7 +17,10 @@ public partial class SearchBookPageViewModel : BaseViewModel
 
     public AsyncRelayCommand SearchBooksCommand { get; }
     public AsyncRelayCommand<BookModel> NavigateToDetailsCommand { get; }
-    
+    public AsyncRelayCommand GoToPreviousPageCommand { get; }
+    public AsyncRelayCommand GoToNextPageCommand { get; }
+
+
 
     public SearchBookPageViewModel()
     {
@@ -26,8 +30,8 @@ public partial class SearchBookPageViewModel : BaseViewModel
         SearchBooksCommand = new AsyncRelayCommand(SearchBooksAsync);
         NavigateToDetailsCommand = new AsyncRelayCommand<BookModel>(NavigateToDetailsAsync);
 
-
-
+        GoToPreviousPageCommand = new AsyncRelayCommand(GoToPreviousPage);
+        GoToNextPageCommand = new AsyncRelayCommand(GoToNextPage);
     }
 
     [ObservableProperty]
@@ -36,6 +40,38 @@ public partial class SearchBookPageViewModel : BaseViewModel
     [ObservableProperty]
     private bool isBusy;
 
+    [ObservableProperty]
+    private int currentPage = 1;
+
+
+
+
+    private int startSearchIndex = 0;
+
+   
+
+    private async Task GoToPreviousPage()
+    {
+        if (currentPage > 1)
+        {
+            
+            CurrentPage--;
+            await Task.Delay(1);
+            await SearchBooksAsync();
+            OnPropertyChanged(nameof(CurrentPage));
+
+        }
+        return;
+    }
+
+    private async Task GoToNextPage()
+    {
+        CurrentPage++;
+        await Task.Delay(1);
+        await SearchBooksAsync();
+        OnPropertyChanged(nameof(CurrentPage));
+        return;
+    }
 
     private bool CheckForInternetConnection()
     {
@@ -67,7 +103,8 @@ public partial class SearchBookPageViewModel : BaseViewModel
 
         try
         {
-            var results = await _googleBooksService.SearchBooksByQueryAsync(SearchQuery);
+            var startSearchIndexHelper = (currentPage - 1) * 20;
+            var results = await _googleBooksService.SearchBooksByQueryAsync(SearchQuery,startSearchIndex+startSearchIndexHelper);
             if (results.Any())
             {
                 foreach (var book in results)

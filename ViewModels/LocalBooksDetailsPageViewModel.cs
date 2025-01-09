@@ -23,7 +23,12 @@ public partial class LocalBooksDetailsPageViewModel : BaseViewModel
     [ObservableProperty]
     private bool isBusy=true;
 
-
+    partial void OnSelectedBookChanged(ReadBookModel value)
+    {
+        // Optional: Log the book data when it changes
+        Console.WriteLine($"Current Book Changed: {value?.Title}");
+        OnPropertyChanged(nameof(SelectedBook));
+    }
     private async Task DeleteBookFromLibraryAsync()
     {
         if (selectedBook == null)
