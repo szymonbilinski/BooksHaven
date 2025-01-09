@@ -16,6 +16,7 @@ public partial class SearchBookPageViewModel : BaseViewModel
 
     public AsyncRelayCommand SearchBooksCommand { get; }
     public AsyncRelayCommand<BookModel> NavigateToDetailsCommand { get; }
+    
 
     public SearchBookPageViewModel()
     {
@@ -24,6 +25,9 @@ public partial class SearchBookPageViewModel : BaseViewModel
 
         SearchBooksCommand = new AsyncRelayCommand(SearchBooksAsync);
         NavigateToDetailsCommand = new AsyncRelayCommand<BookModel>(NavigateToDetailsAsync);
+
+
+
     }
 
     [ObservableProperty]
@@ -33,8 +37,23 @@ public partial class SearchBookPageViewModel : BaseViewModel
     private bool isBusy;
 
 
+    private bool CheckForInternetConnection()
+    {
+        NetworkAccess accessType = Connectivity.Current.NetworkAccess;
+        if(accessType == NetworkAccess.Internet)
+        {
+            return true;
+        }
+        return false;
+    }
+
     private async Task SearchBooksAsync()
     {
+        if (CheckForInternetConnection() is false)
+        {
+            await App.Current.MainPage.DisplayAlert("No Internet Connection", "Please Check your internet connection", "OK");
+            return;
+        }
         if (string.IsNullOrWhiteSpace(searchQuery))
         {
             await App.Current.MainPage.DisplayAlert("Wrong", "Plase provide book title or authors", "OK");
