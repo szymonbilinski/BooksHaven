@@ -11,8 +11,6 @@ namespace BooksHaven.Services
 
         public GoogleBooksService()
         {
-            
-            //string apiKey = "AIzaSyDf9fKn9ZpbsF2LoSYnDBZkIGWl5_0WVgw"; //Example Api Key
             string apiKey = constants.APIKEY;
             _httpClient = new HttpClient();
             _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));

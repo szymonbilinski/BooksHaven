@@ -8,8 +8,6 @@
     <ScrollView>
     <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="#ECECEC">
 
-
-        <!-- Books List -->
         <CollectionView ItemsSource="{Binding LocalBooks}" 
                         SelectionMode="None"
                         VerticalOptions="FillAndExpand"
@@ -23,18 +21,16 @@
                         </Frame.GestureRecognizers>
 
                         <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*">
-                            <!-- Book Thumbnail -->
+
                             <Image Source="{Binding Thumbnail}" 
                                    Style="{StaticResource BookThumbnailStyle}" 
                                    Grid.RowSpan="2" Grid.Column="0" 
                                    Aspect="AspectFit"/>
 
-                            <!-- Book Title -->
                             <Label Text="{Binding Title}" 
                                    Style="{StaticResource BookTitleStyle}" 
                                    Grid.Row="0" Grid.Column="1" />
 
-                            <!-- Book Authors -->
                             <Label Text="{Binding Authors}" 
                                    Style="{StaticResource BookAuthorStyle}" 
                                    Grid.Row="1" Grid.Column="1" />

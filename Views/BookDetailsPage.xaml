@@ -6,18 +6,14 @@
 
     <ScrollView>
         <VerticalStackLayout BackgroundColor="#ECECEC">
-
-            <!-- Book Thumbnail -->
             <Image Source="{Binding CurrentBook.Thumbnail}"
                    HorizontalOptions="Center" 
                    Style="{StaticResource BookDetailThumbnailStyle}"/>
 
-            <!-- Book Title -->
             <Label Text="{Binding CurrentBook.Title}"
                    HorizontalTextAlignment="Center"
                    Style="{StaticResource BookDetailTitleStyle}" />
 
-            <!-- Book Authors -->
             <Label Text="{Binding CurrentBook.Authors}"
                    HorizontalTextAlignment="Center"
                    Style="{StaticResource BookDetailAuthorStyle}" />
@@ -40,7 +36,6 @@
 
             </Border>
 
-            <!-- Mark as Read Button -->
             <Button Text="Mark as Read"
                     Command="{Binding AddBookToLibraryCommand}"
                     HorizontalOptions="FillAndExpand"

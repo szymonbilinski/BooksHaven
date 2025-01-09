@@ -10,13 +10,11 @@
     <ScrollView Grid.Row="0">
         <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="#ECECEC">
 
-        <!-- Search Bar -->
         <SearchBar Placeholder="Search by title or author..."
                    Text="{Binding SearchQuery}"
                    SearchCommand="{Binding SearchBooksCommand}"
                    Style="{StaticResource SearchBarStyle}" />
        
-            <!-- Search Results -->
         <CollectionView ItemsSource="{Binding Books}"
                         SelectionMode="None"
                         VerticalOptions="FillAndExpand"
@@ -31,18 +29,15 @@
                         
                         <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" ColumnSpacing="10">
                             
-                            <!-- Book Thumbnail -->
                             <Image Source="{Binding Thumbnail}" 
                                    Style="{StaticResource BookThumbnailStyle}" 
                                    Grid.RowSpan="2" Grid.Column="0" 
                                    Aspect="AspectFit"/>
 
-                            <!-- Book Title -->
                             <Label Text="{Binding Title}" 
                                    Style="{StaticResource BookTitleStyle}" 
                                    Grid.Row="0" Grid.Column="1" />
 
-                            <!-- Book Authors -->
                             <Label Text="{Binding Authors}" 
                                    Style="{StaticResource BookAuthorStyle}" 
                                    Grid.Row="1" Grid.Column="1" />
