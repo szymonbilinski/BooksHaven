@@ -12,7 +12,7 @@ public partial class SearchBookPageViewModel : BaseViewModel
 {
     private readonly GoogleBooksService _googleBooksService;
 
-    public ObservableCollection<BookModel> Books { get; }
+    public ObservableCollection<BookModel> Books { get; set; }
 
     public AsyncRelayCommand SearchBooksCommand { get; }
     public AsyncRelayCommand<BookModel> NavigateToDetailsCommand { get; }
@@ -38,15 +38,80 @@ public partial class SearchBookPageViewModel : BaseViewModel
 
     [ObservableProperty]
     private int currentPage=1;
+    [ObservableProperty]
+    private int pickerSelectedIndex = -1;
 
     private int startIndex = 0;
+
+    partial void OnPickerSelectedIndexChanged(int value)
+    {
+        var picker = value;
+
+        switch (picker)
+        {
+            case 0:
+                {
+                    var BooksSorted = new ObservableCollection<BookModel>(Books.OrderBy(i=>i.Title));
+                    SortBooksAsync(BooksSorted);
+                    OnPropertyChanged(nameof(Books));
+                    break;
+                }
+            case 1:
+                {
+                    var BooksSorted = new ObservableCollection<BookModel>(Books.OrderByDescending(i => i.Title));
+                    SortBooksAsync(BooksSorted);
+                    OnPropertyChanged(nameof(Books));
+                    break;
+                }
+            case 2:
+                {
+                    var BooksSorted = new ObservableCollection<BookModel>(Books.OrderBy(i => i.Authors));
+                    SortBooksAsync(BooksSorted);
+                    OnPropertyChanged(nameof(Books));
+                    break;
+                }
+            case 3:
+                {
+                    var BooksSorted = new ObservableCollection<BookModel>(Books.OrderByDescending(i => i.Authors));
+                    SortBooksAsync(BooksSorted);
+                    OnPropertyChanged(nameof(Books));
+                    break;
+                }
+            case 4:
+                {
+                    var BooksSorted = new ObservableCollection<BookModel>(Books.OrderBy(i => i.PublishedDate));
+                    SortBooksAsync(BooksSorted);
+                    OnPropertyChanged(nameof(Books));
+                    break;
+                }
+            case 5:
+                {
+                    var BooksSorted = new ObservableCollection<BookModel>(Books.OrderByDescending(i => i.PublishedDate));
+                    SortBooksAsync(BooksSorted);
+                    OnPropertyChanged(nameof(Books));
+                    break;
+                }
+            default: break;
+
+
+        }
+    }
+
+    private async Task SortBooksAsync(ObservableCollection<BookModel> books)
+    {
+        Books.Clear();
+        Books = books;
+
+    }
 
     [RelayCommand]
     private async Task GoToNextPage()
     {
         currentPage++;
         await SearchBooksAsync();
+        pickerSelectedIndex = -1;
         OnPropertyChanged(nameof(CurrentPage));
+        OnPropertyChanged(nameof(PickerSelectedIndex));
     }
     [RelayCommand]
     private async Task GoToPreviousPage()
@@ -55,7 +120,9 @@ public partial class SearchBookPageViewModel : BaseViewModel
         {
             currentPage--;
             await SearchBooksAsync();
+            pickerSelectedIndex = -1;
             OnPropertyChanged(nameof(CurrentPage));
+            OnPropertyChanged(nameof(PickerSelectedIndex));
         }
     }
 

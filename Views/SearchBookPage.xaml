@@ -10,12 +10,23 @@
     <ScrollView Grid.Row="0">
         <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="#ECECEC">
 
-        <SearchBar Placeholder="Search by title or author..."
+                <SearchBar Placeholder="Search by title or author..."
                    Text="{Binding SearchQuery}"
                    SearchCommand="{Binding SearchBooksCommand}"
                    Style="{StaticResource SearchBarStyle}" />
-       
-        <CollectionView ItemsSource="{Binding Books}"
+                <Picker Title="Sort by:" HorizontalOptions="End" SelectedIndex="{Binding PickerSelectedIndex}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Title Ascending</x:String>
+                            <x:String>Title Descending</x:String>
+                            <x:String>Authors Ascending</x:String>
+                            <x:String>Authors Descending</x:String>
+                            <x:String>Publish Date Ascending</x:String>
+                            <x:String>Publish Date Descending</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <CollectionView ItemsSource="{Binding Books}"
                         SelectionMode="None"
                         VerticalOptions="FillAndExpand"
                         BackgroundColor="Transparent">
