@@ -41,18 +41,18 @@ Perfect for book enthusiasts who want a simple, beautiful way to manage their re
 ## Screenshots
 
 1. **Search Page**  
-   _Description_: Search for your favorite books.  
+ Search for your favorite books in Google Books.  
    ![image](https://github.com/user-attachments/assets/081b1e82-6996-4175-a016-2a1e34769ba2)
 
 
 
 2. **Book Details Page**  
-   _Description_: View detailed information about the selected book.  
+   View detailed information about the selected book like Description, Published Date etc.
    ![image](https://github.com/user-attachments/assets/a5b14c60-07a4-410b-aa28-b87b12d6e143)
 
 
 3. **Library Page**  
-   _Description_: Manage your personal library of read books.  
+   Manage your personal library of read books and store locally on your device.  
    ![image](https://github.com/user-attachments/assets/ce70ddc9-5376-40b7-8b16-6135cf6cec3d)
 
 
