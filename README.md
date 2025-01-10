@@ -83,7 +83,8 @@ Before running the application, ensure the following software is installed on yo
 4. Install depencencies
    If using Visual Studio, open the solution file (BooksHaven.sln) and restore NuGet packages.
    Alternatively, use the command line:
-    ```dotnet restore
+    ```bash
+    dotnet restore
    
 ## Running the Application
 
