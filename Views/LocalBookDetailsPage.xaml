@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BooksHaven.Views.LocalBookDetailsPage"
+             Title="Book Details">
+
+    <ScrollView>
+        <VerticalStackLayout BackgroundColor="#ECECEC">
+
+            <Image Source="{Binding SelectedBook.Thumbnail}" 
+                   Style="{StaticResource BookDetailThumbnailStyle}" 
+                   Aspect="AspectFit" />
+            <Label Text="{Binding SelectedBook.Title}" 
+                   Style="{StaticResource BookDetailTitleStyle}" />
+
+            <Label Text="{Binding SelectedBook.Authors}" 
+                   Style="{StaticResource BookDetailAuthorStyle}" />
+
+            <Label Text="{Binding SelectedBook.PublishedDate}" 
+                   Style="{StaticResource BookPublishedDateStyle}" />
+
+            <Border Padding="10" Margin="0" BackgroundColor="White">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="30,30,0,0"/>
+                </Border.StrokeShape>
+                <StackLayout>
+                    <Label Text="Description" FontSize="Large" FontAttributes="Bold" Padding="10"/>
+                    <ScrollView>
+                    <Label Text="{Binding SelectedBook.Description}" 
+                       Style="{StaticResource BookDetailDescriptionStyle}" />
+                </ScrollView>
+                </StackLayout>
+                
+            </Border>
+
+            <Button Text="Didn't read yet?"
+                    Command="{Binding DeleteBookFromLibraryCommand}"
+                    IsEnabled="{Binding IsBusy}"
+                    Style="{StaticResource PrimaryButtonStyle}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

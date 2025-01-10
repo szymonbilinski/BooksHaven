@@ -8,4 +8,9 @@ public partial class ReadBookPage : ContentPage
 		InitializeComponent();
 		BindingContext = new ReadBookPageViewModel();
 	}
+    protected async override void OnAppearing()
+    {
+        base.OnAppearing();
+        await (BindingContext as ReadBookPageViewModel).LoadBooksAsync();
+    }
 }

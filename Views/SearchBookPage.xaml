@@ -1,52 +1,72 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BooksHaven.Views.SearchBookPage"
-             Title="SearchBookPage">
-    <ContentPage.Content>
-        <!-- Use StackLayout to simplify layout and ensure visibility -->
-        <Grid Padding="10" RowDefinitions="Auto,Auto, *" ColumnDefinitions="*">
-            <SearchBar Placeholder="Enter book title or author..."
-                       Text="{Binding SearchQuery}"
-                       Margin="0,0,0,10"
-                       HorizontalOptions="FillAndExpand"
-                       VerticalOptions="Center" 
-                       Grid.Row="0"/>
+             xmlns:viewmodel="clr-namespace:BooksHaven.ViewModels"
+             xmlns:model="clr-namespace:BooksHaven.Models"
+             x:DataType="viewmodel:SearchBookPageViewModel"
+             x:Class="BooksHaven.Views.SearchBookPage">
 
-            <Button Text="Search"
-                    Command="{Binding SearchCommand}"
-                    VerticalOptions="Center"
-                    HorizontalOptions="FillAndExpand"
-                    Margin="0,10"
-                    Grid.Row="1"/>
-            <CollectionView ItemsSource="{Binding Books}"
-                            VerticalOptions="FillAndExpand"
-                            SelectionMode="None"
-                            Grid.Row="2">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*,*">
-                            <Image Source="{Binding Thumbnail}"
-                               HeightRequest="120"
-                               WidthRequest="100"
-                               HorizontalOptions="Start"
-                               Grid.Column="0"/>
-                            <Label Text="{Binding Title}"
-                               FontSize="16"
-                               FontAttributes="Bold"
-                               VerticalOptions="Start"
-                               HorizontalOptions="StartAndExpand"
-                               Grid.Column="1"/>
-                            <Label Text="{Binding Authors}"
-                               FontSize="14"
-                               TextColor="Gray"
-                               VerticalOptions="Start"
-                               HorizontalOptions="StartAndExpand"
-                               Grid.Column="2"/>
+    <Grid RowDefinitions="*,Auto">
+    <ScrollView Grid.Row="0">
+        <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="#ECECEC">
+
+                <SearchBar Placeholder="Search by title or author..."
+                   Text="{Binding SearchQuery}"
+                   SearchCommand="{Binding SearchBooksCommand}"
+                   Style="{StaticResource SearchBarStyle}" />
+                <Picker Title="Sort by:" HorizontalOptions="End" SelectedIndex="{Binding PickerSelectedIndex}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Title Ascending</x:String>
+                            <x:String>Title Descending</x:String>
+                            <x:String>Authors Ascending</x:String>
+                            <x:String>Authors Descending</x:String>
+                            <x:String>Publish Date Ascending</x:String>
+                            <x:String>Publish Date Descending</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <CollectionView ItemsSource="{Binding Books}"
+                        SelectionMode="None"
+                        VerticalOptions="FillAndExpand"
+                        BackgroundColor="Transparent">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:BookModel">
+                    <Frame Style="{StaticResource BookCardView}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer CommandParameter="{Binding .}" 
+                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SearchBookPageViewModel}}, Path=NavigateToDetailsCommand}" />
+                        </Frame.GestureRecognizers>
+                        
+                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            
+                            <Image Source="{Binding Thumbnail}" 
+                                   Style="{StaticResource BookThumbnailStyle}" 
+                                   Grid.RowSpan="2" Grid.Column="0" 
+                                   Aspect="AspectFit"/>
+
+                            <Label Text="{Binding Title}" 
+                                   Style="{StaticResource BookTitleStyle}" 
+                                   Grid.Row="0" Grid.Column="1" />
+
+                            <Label Text="{Binding Authors}" 
+                                   Style="{StaticResource BookAuthorStyle}" 
+                                   Grid.Row="1" Grid.Column="1" />
                         </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </Grid>
-    </ContentPage.Content>
+                        
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        
+    </VerticalStackLayout>
+    </ScrollView>
+        <Border Grid.Row="1">
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Button Text="&lt;" Command="{Binding GoToPreviousPageCommand}"/>
+                <Label Text="{Binding CurrentPage,Mode=TwoWay}" Padding="10"/>
+                <Button Text="&gt;" Command="{Binding GoToNextPageCommand}"/>
+            </HorizontalStackLayout>
+        </Border>
+    </Grid>
 </ContentPage>
