@@ -77,8 +77,10 @@ Before running the application, ensure the following software is installed on yo
    cd bookshaven
 2. Create the Constants.cs file:
    This file shoulld be llocated in the root of the BooksHaven project.
+   
     ![image](https://github.com/user-attachments/assets/c717cbe7-672c-4473-965c-6e7e0fbe581e)
-3. Install depencencies
+   
+4. Install depencencies
    If using Visual Studio, open the solution file (BooksHaven.sln) and restore NuGet packages.
    Alternatively, use the command line:
     dotnet restore
